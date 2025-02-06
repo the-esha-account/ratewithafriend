@@ -6,14 +6,21 @@ async function loadGallery() {
     const gallery = document.getElementById('gallery');
     
     try {
+        console.log('Fetching ratings...');
         const { data: ratings, error } = await supabase
             .from('ratings')
             .select('*')
             .order('created_at', { ascending: false });
 
-        if (error) throw error;
+        if (error) {
+            console.error('Supabase error:', error);
+            throw error;
+        }
+
+        console.log('Ratings received:', ratings);
 
         if (ratings.length === 0) {
+            console.log('No ratings found');
             gallery.innerHTML = '<p>No ratings yet! Go to Upload to add the first one.</p>';
             return;
         }
@@ -21,6 +28,7 @@ async function loadGallery() {
         gallery.innerHTML = '';
 
         ratings.forEach(data => {
+            console.log('Processing rating:', data);
             const item = document.createElement('div');
             item.className = 'gallery-item';
             item.innerHTML = `
@@ -35,7 +43,7 @@ async function loadGallery() {
             gallery.appendChild(item);
         });
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Detailed error:', error);
         gallery.innerHTML = '<p>Error loading gallery. Please try again later.</p>';
     }
 }
