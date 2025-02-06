@@ -3,9 +3,17 @@ const gallery = document.getElementById('gallery');
 function loadGallery() {
     const entries = JSON.parse(localStorage.getItem('foodRatings') || '[]');
     
+    console.log('Loading entries:', entries); // Debug line
+
+    if (entries.length === 0) {
+        gallery.innerHTML = '<p>No entries yet!</p>';
+        return;
+    }
+    
     gallery.innerHTML = ''; // Clear existing content
 
     entries.forEach(data => {
+        console.log('Processing entry:', data); // Debug line
         const item = document.createElement('div');
         item.className = 'gallery-item';
         item.innerHTML = `
