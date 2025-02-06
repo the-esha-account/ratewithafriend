@@ -14,7 +14,6 @@ async function loadGallery() {
             .order('created_at', { ascending: false });
 
         console.log('Ratings:', ratings);
-        console.log('Error:', error);
 
         if (error) throw error;
 
