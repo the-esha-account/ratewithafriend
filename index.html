@@ -3,48 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Rating</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        #imagePreview { width: 300px; margin-top: 20px; display: none; }
-        .ratings img { width: 80px; cursor: pointer; opacity: 0.5; transition: 0.2s; }
-        .ratings img:hover, .selected { opacity: 1; }
-    </style>
+    <title>Food Rating Gallery</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav>
+        <a href="index.html" class="active">Gallery</a>
+        <a href="upload.html">Upload</a>
+    </nav>
 
-    <h2>Upload a Food Image</h2>
-    <input type="file" id="fileInput" accept="image/*">
-    <br>
-    <img id="imagePreview">
-
-    <div class="ratings" style="margin-top: 20px;">
-        <img src="5.jpeg" id="up" onclick="rate('up')">
-        <img src="2.5.jpeg" id="middle" onclick="rate('middle')">
-        <img src="0.jpg" id="down" onclick="rate('down')">
+    <div class="gallery-container">
+        <h2>Food Rating Gallery</h2>
+        <div id="gallery" class="gallery-grid">
+            <!-- Entries will be added here dynamically -->
+        </div>
     </div>
 
-    <script>
-        const fileInput = document.getElementById("fileInput");
-        const imagePreview = document.getElementById("imagePreview");
-
-        fileInput.addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = "block";
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        function rate(choice) {
-            document.querySelectorAll(".ratings img").forEach(img => img.classList.remove("selected"));
-            document.getElementById(choice).classList.add("selected");
-        }
-    </script>
-
+    <script type="module" src="js/gallery.js"></script>
 </body>
 </html>
