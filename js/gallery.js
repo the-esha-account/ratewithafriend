@@ -21,7 +21,7 @@ function loadGallery() {
             <div class="gallery-location">${data.location}</div>
             <img class="food-image" src="${data.imageUrl}" alt="${data.name}">
             <div class="gallery-info">
-                <img class="rating-image" src="images/${data.rating}.jpeg" alt="Rating: ${data.rating}">
+                <img class="rating-image" src="${data.rating}.jpeg" alt="Rating: ${data.rating}">
                 <div class="gallery-comment">${data.comment}</div>
             </div>
         `;
