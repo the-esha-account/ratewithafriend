@@ -1,6 +1,7 @@
 import { SUPABASE_URL, SUPABASE_KEY } from './config.js';
 
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Create Supabase client correctly
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function loadGallery() {
     const gallery = document.getElementById('gallery');
@@ -12,15 +13,12 @@ async function loadGallery() {
             .select('*')
             .order('created_at', { ascending: false });
 
-        if (error) {
-            console.error('Supabase error:', error);
-            throw error;
-        }
+        console.log('Ratings:', ratings);  // Debug line
+        console.log('Error:', error);      // Debug line
 
-        console.log('Ratings received:', ratings);
+        if (error) throw error;
 
-        if (ratings.length === 0) {
-            console.log('No ratings found');
+        if (!ratings || ratings.length === 0) {
             gallery.innerHTML = '<p>No ratings yet! Go to Upload to add the first one.</p>';
             return;
         }
@@ -28,7 +26,6 @@ async function loadGallery() {
         gallery.innerHTML = '';
 
         ratings.forEach(data => {
-            console.log('Processing rating:', data);
             const item = document.createElement('div');
             item.className = 'gallery-item';
             item.innerHTML = `
@@ -43,7 +40,7 @@ async function loadGallery() {
             gallery.appendChild(item);
         });
     } catch (error) {
-        console.error('Detailed error:', error);
+        console.error('Error loading gallery:', error);
         gallery.innerHTML = '<p>Error loading gallery. Please try again later.</p>';
     }
 }
