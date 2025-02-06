@@ -1,6 +1,6 @@
-const IMGUR_CLIENT_ID = '8db0a94a56a0071'; // Make sure this is your actual Client ID
-const GITHUB_REPO = 'the-esha-account/ratewithafriend';
+import { SUPABASE_URL, SUPABASE_KEY, IMGUR_CLIENT_ID } from './config.js';
 
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const form = document.getElementById('uploadForm');
 const fileInput = document.getElementById('fileInput');
 const imagePreview = document.getElementById('imagePreview');
@@ -58,28 +58,18 @@ form.addEventListener('submit', async (e) => {
         const imgurData = await imgurResponse.json();
         if (!imgurData.success) throw new Error('Imgur upload failed');
 
-        const entry = {
-            name: document.getElementById('foodName').value,
-            location: document.getElementById('location').value,
-            imageUrl: imgurData.data.link,
-            rating: selectedRating,
-            comment: document.getElementById('comment').value,
-            timestamp: new Date().toISOString()
-        };
+        // Create the entry in Supabase
+        const { data, error } = await supabase
+            .from('ratings')
+            .insert([{
+                name: document.getElementById('foodName').value,
+                location: document.getElementById('location').value,
+                imageUrl: imgurData.data.link,
+                rating: selectedRating,
+                comment: document.getElementById('comment').value
+            }]);
 
-        const issueData = {
-            title: `Food Rating: ${entry.name}`,
-            body: JSON.stringify(entry)
-        };
-
-        await fetch(`https://api.github.com/repos/${GITHUB_REPO}/issues`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `token YOUR_GITHUB_TOKEN`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(issueData)
-        });
+        if (error) throw error;
 
         alert('Rating submitted successfully!');
         window.location.href = 'index.html';
