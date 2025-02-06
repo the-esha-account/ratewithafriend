@@ -1,20 +1,20 @@
 import { SUPABASE_URL, SUPABASE_KEY } from './config.js';
 
-// Create Supabase client correctly
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+// Initialize Supabase
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function loadGallery() {
     const gallery = document.getElementById('gallery');
     
     try {
         console.log('Fetching ratings...');
-        const { data: ratings, error } = await supabase
+        const { data: ratings, error } = await supabaseClient
             .from('ratings')
             .select('*')
             .order('created_at', { ascending: false });
 
-        console.log('Ratings:', ratings);  // Debug line
-        console.log('Error:', error);      // Debug line
+        console.log('Ratings:', ratings);
+        console.log('Error:', error);
 
         if (error) throw error;
 
