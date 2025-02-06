@@ -28,18 +28,19 @@
             flex-direction: column;
             align-items: center;
             gap: 5px;
+            cursor: pointer;
+            padding: 5px;
         }
 
         .rating-option {
             width: 40px;
-            cursor: pointer;
             border: 2px solid transparent;
             border-radius: 50%;
             padding: 2px;
             transition: 0.2s;
         }
 
-        .rating-option:hover {
+        .rating-option-container:hover .rating-option {
             border-color: #666;
         }
 
@@ -110,15 +111,15 @@
         <div class="ratings">
             <div class="rating-options">
                 <div class="rating-option-container">
-                    <img src="5.jpeg" id="up" data-rating="5" class="rating-option">
+                    <img src="5.jpeg" data-rating="5" class="rating-option">
                     <span class="rating-label">5</span>
                 </div>
                 <div class="rating-option-container">
-                    <img src="2.5.jpeg" id="middle" data-rating="2.5" class="rating-option">
+                    <img src="2.5.jpeg" data-rating="2.5" class="rating-option">
                     <span class="rating-label">2.5</span>
                 </div>
                 <div class="rating-option-container">
-                    <img src="0.jpg" id="down" data-rating="0" class="rating-option">
+                    <img src="0.jpg" data-rating="0" class="rating-option">
                     <span class="rating-label">0</span>
                 </div>
             </div>
@@ -133,6 +134,9 @@
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="upload.js" type="module"></script>
+    <script>
+        window.supabase = supabase
+    </script>
+    <script src="js/upload.js" type="module"></script>
 </body>
 </html>
