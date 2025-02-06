@@ -6,7 +6,6 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const form = document.getElementById('uploadForm');
 const fileInput = document.getElementById('fileInput');
 const imagePreview = document.getElementById('imagePreview');
-const ratingOptions = document.querySelectorAll('.rating-option');
 let selectedRating = null;
 
 // Preview image
@@ -23,19 +22,26 @@ fileInput.addEventListener('change', function (event) {
 });
 
 // Handle rating selection
-ratingOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        ratingOptions.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-        selectedRating = option.dataset.rating;
-        console.log('Selected rating:', selectedRating); // Debug line
+document.querySelectorAll('.rating-option-container').forEach(container => {
+    container.addEventListener('click', (e) => {
+        const img = container.querySelector('.rating-option');
+        const rating = img.dataset.rating;
+        console.log('Rating clicked:', rating);
+        
+        // Remove selected class from all options
+        document.querySelectorAll('.rating-option').forEach(opt => 
+            opt.classList.remove('selected'));
+        
+        // Add selected class to clicked option
+        img.classList.add('selected');
+        selectedRating = rating;
     });
 });
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('Form submitted'); // Debug line
-
+    console.log('Form submitted!');
+    
     if (!selectedRating) {
         alert('Please select a rating');
         return;
@@ -48,7 +54,7 @@ form.addEventListener('submit', async (e) => {
     }
 
     try {
-        console.log('Uploading to Imgur...'); // Debug line
+        console.log('Uploading to Imgur...');
         const formData = new FormData();
         formData.append('image', file);
 
@@ -61,7 +67,7 @@ form.addEventListener('submit', async (e) => {
         });
 
         const imgurData = await imgurResponse.json();
-        console.log('Imgur response:', imgurData); // Debug line
+        console.log('Imgur response:', imgurData);
 
         if (!imgurData.success) throw new Error('Imgur upload failed');
 
@@ -73,7 +79,7 @@ form.addEventListener('submit', async (e) => {
             comment: document.getElementById('comment').value
         };
 
-        console.log('Saving to Supabase:', entry); // Debug line
+        console.log('Saving to Supabase:', entry);
 
         const { data, error } = await supabaseClient
             .from('ratings')
@@ -81,8 +87,7 @@ form.addEventListener('submit', async (e) => {
 
         if (error) throw error;
 
-        console.log('Saved successfully:', data); // Debug line
-
+        console.log('Saved successfully:', data);
         alert('Rating submitted successfully!');
         window.location.href = 'index.html';
     } catch (error) {
