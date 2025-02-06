@@ -8,6 +8,8 @@ const fileInput = document.getElementById('fileInput');
 const imagePreview = document.getElementById('imagePreview');
 let selectedRating = null;
 
+console.log('upload.js loaded'); // Debug line
+
 // Preview image
 fileInput.addEventListener('change', function (event) {
     const file = event.target.files[0];
@@ -24,6 +26,7 @@ fileInput.addEventListener('change', function (event) {
 // Handle rating selection
 document.querySelectorAll('.rating-option-container').forEach(container => {
     container.addEventListener('click', (e) => {
+        console.log('Container clicked'); // Debug line
         const img = container.querySelector('.rating-option');
         const rating = img.dataset.rating;
         console.log('Rating clicked:', rating);
