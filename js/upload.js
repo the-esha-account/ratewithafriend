@@ -23,9 +23,9 @@ fileInput.addEventListener('change', function (event) {
         return;
     }
     
-    const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+    const MAX_SIZE = 5 * 4000 * 4000; // 5MB
     if (file.size > MAX_SIZE) {
-        alert('Image must be smaller than 2MB.');
+        alert('Image must be smaller than 5MB.');
         fileInput.value = '';
         return;
     }
