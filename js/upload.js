@@ -1,6 +1,8 @@
 import { SUPABASE_URL, SUPABASE_KEY, IMGUR_CLIENT_ID } from './config.js';
 
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Initialize Supabase
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const form = document.getElementById('uploadForm');
 const fileInput = document.getElementById('fileInput');
 const imagePreview = document.getElementById('imagePreview');
@@ -26,11 +28,13 @@ ratingOptions.forEach(option => {
         ratingOptions.forEach(opt => opt.classList.remove('selected'));
         option.classList.add('selected');
         selectedRating = option.dataset.rating;
+        console.log('Selected rating:', selectedRating); // Debug line
     });
 });
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log('Form submitted'); // Debug line
 
     if (!selectedRating) {
         alert('Please select a rating');
@@ -44,6 +48,7 @@ form.addEventListener('submit', async (e) => {
     }
 
     try {
+        console.log('Uploading to Imgur...'); // Debug line
         const formData = new FormData();
         formData.append('image', file);
 
@@ -56,25 +61,32 @@ form.addEventListener('submit', async (e) => {
         });
 
         const imgurData = await imgurResponse.json();
+        console.log('Imgur response:', imgurData); // Debug line
+
         if (!imgurData.success) throw new Error('Imgur upload failed');
 
-        // Create the entry in Supabase
-        const { data, error } = await supabase
+        const entry = {
+            name: document.getElementById('foodName').value,
+            location: document.getElementById('location').value,
+            imageUrl: imgurData.data.link,
+            rating: selectedRating,
+            comment: document.getElementById('comment').value
+        };
+
+        console.log('Saving to Supabase:', entry); // Debug line
+
+        const { data, error } = await supabaseClient
             .from('ratings')
-            .insert([{
-                name: document.getElementById('foodName').value,
-                location: document.getElementById('location').value,
-                imageUrl: imgurData.data.link,
-                rating: selectedRating,
-                comment: document.getElementById('comment').value
-            }]);
+            .insert([entry]);
 
         if (error) throw error;
+
+        console.log('Saved successfully:', data); // Debug line
 
         alert('Rating submitted successfully!');
         window.location.href = 'index.html';
     } catch (error) {
         console.error('Error:', error);
-        alert('Error uploading rating. Please try again.');
+        alert('Error uploading rating. Please check the console for details.');
     }
 });
