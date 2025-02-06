@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery - Fanta Rate</title>
     <style>
-        /* ... keep your existing styles ... */
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
 
-        /* Add these new styles */
         .header {
             width: 100%;
             padding: 20px;
@@ -15,6 +20,8 @@
             align-items: center;
             justify-content: space-between;
             box-sizing: border-box;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .logo {
@@ -47,6 +54,58 @@
 
         nav a.active {
             border-bottom: 2px solid #FF4E50;
+        }
+
+        /* Gallery specific styles */
+        .gallery-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item img.food-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-item img.rating-image {
+            width: 30px;
+            margin: 10px 0;
+        }
+
+        .gallery-info {
+            padding: 15px;
+        }
+
+        .gallery-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .gallery-location {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .gallery-comment {
+            font-size: 0.9em;
+            color: #333;
         }
     </style>
 </head>
