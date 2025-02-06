@@ -12,7 +12,6 @@ console.log('Initial localStorage content:', localStorage.getItem('foodRatings')
 // Handle rating selection
 ratingOptions.forEach(option => {
     option.addEventListener('click', () => {
-        console.log('Rating clicked:', option.dataset.rating); // Debug line
         ratingOptions.forEach(opt => opt.classList.remove('selected'));
         option.classList.add('selected');
         selectedRating = option.dataset.rating;
