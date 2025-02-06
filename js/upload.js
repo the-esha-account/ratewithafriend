@@ -16,7 +16,7 @@ fileInput.addEventListener('change', function (event) {
     const file = event.target.files[0];
     if (!file) return;
 
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
     if (!allowedTypes.includes(file.type)) {
         alert('Only JPG, PNG, and GIF images are allowed.');
         fileInput.value = '';
