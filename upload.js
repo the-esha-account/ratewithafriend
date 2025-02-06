@@ -1,6 +1,4 @@
-import { storage, db } from './firebase-config.js';
-import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+const IMGUR_CLIENT_ID = '8db0a94a56a0071'; 
 
 const form = document.getElementById('uploadForm');
 const fileInput = document.getElementById('fileInput');
@@ -51,20 +49,33 @@ form.addEventListener('submit', async (e) => {
     }
 
     try {
-        // Upload image to Firebase Storage
-        const storageRef = ref(storage, 'food-images/' + Date.now() + '-' + file.name);
-        await uploadBytes(storageRef, file);
-        const imageUrl = await getDownloadURL(storageRef);
+        // Upload to Imgur
+        const formData = new FormData();
+        formData.append('image', file);
 
-        // Save entry to Firestore
-        await addDoc(collection(db, 'food-ratings'), {
+        const response = await fetch('https://api.imgur.com/3/image', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Client-ID ${IMGUR_CLIENT_ID}`
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+        if (!data.success) throw new Error('Upload failed');
+
+        const entry = {
             name: document.getElementById('foodName').value,
             location: document.getElementById('location').value,
-            imageUrl: imageUrl,
+            imageUrl: data.data.link,
             rating: selectedRating,
             comment: document.getElementById('comment').value,
-            timestamp: serverTimestamp()
-        });
+            timestamp: Date.now()
+        };
+
+        let entries = JSON.parse(localStorage.getItem('foodRatings') || '[]');
+        entries.unshift(entry)
+        localStorage.setItem('foodRatings', JSON.stringify(entries));
 
         alert('Rating submitted successfully!');
         window.location.href = 'index.html';
