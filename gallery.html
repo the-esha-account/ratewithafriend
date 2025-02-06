@@ -75,25 +75,26 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
         }
 
-        .gallery-item img.food-image {
+        .food-image {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
-        }
-
-        .gallery-item img.rating-image {
-            width: 30px;
-            margin: 10px 0;
+            display: block;
         }
 
         .gallery-info {
             padding: 15px;
+            text-align: left;
         }
 
         .gallery-header {
             font-weight: bold;
+            font-size: 1.2em;
             margin-bottom: 5px;
         }
 
@@ -103,9 +104,23 @@
             margin-bottom: 10px;
         }
 
+        .rating-image {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin: 10px 0;
+        }
+
         .gallery-comment {
             font-size: 0.9em;
             color: #333;
+            margin-top: 10px;
+        }
+
+        h2 {
+            color: #333;
+            margin: 20px 0;
+            font-size: 24px;
         }
     </style>
 </head>
