@@ -21,18 +21,18 @@
             justify-content: space-between;
             box-sizing: border-box;
             background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .logo {
             width: 50px;
             height: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.1s ease-out;
         }
 
         .logo:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         nav {
@@ -45,7 +45,7 @@
             color: #333;
             font-size: 18px;
             padding: 5px 15px;
-            transition: color 0.2s;
+            transition: color 0.1s ease-out;
         }
 
         nav a:hover {
@@ -59,11 +59,10 @@
         .upload-container {
             padding: 20px;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 20px auto;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-top: 20px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         #imagePreview {
@@ -79,6 +78,7 @@
             justify-content: center;
             gap: 30px;
             margin: 30px 0;
+            padding: 10px 0;
         }
 
         .rating-option-container {
@@ -87,7 +87,6 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            padding: 10px;
         }
 
         .rating-option {
@@ -96,12 +95,13 @@
             border: 3px solid transparent;
             border-radius: 50%;
             padding: 3px;
-            transition: 0.2s;
+            transition: all 0.1s ease-out;
+            will-change: transform, border-color;
         }
 
         .rating-option-container:hover .rating-option {
             border-color: #666;
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .rating-option.selected {
@@ -156,12 +156,12 @@
             font-size: 16px;
             font-weight: bold;
             margin-top: 20px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.1s ease-out;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         h2 {
