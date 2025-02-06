@@ -1,4 +1,4 @@
-const IMGUR_CLIENT_ID = '8db0a94a56a0071'; // First, make sure you added your Imgur Client ID here!
+const IMGUR_CLIENT_ID = '8db0a94a56a0071'; // Make sure this is your actual Client ID
 
 const form = document.getElementById('uploadForm');
 const fileInput = document.getElementById('fileInput');
@@ -6,13 +6,16 @@ const imagePreview = document.getElementById('imagePreview');
 const ratingOptions = document.querySelectorAll('.rating-option');
 let selectedRating = null;
 
+// Test localStorage immediately
+console.log('Initial localStorage content:', localStorage.getItem('foodRatings'));
+
 // Handle rating selection
 ratingOptions.forEach(option => {
     option.addEventListener('click', () => {
+        console.log('Rating clicked:', option.dataset.rating); // Debug line
         ratingOptions.forEach(opt => opt.classList.remove('selected'));
         option.classList.add('selected');
         selectedRating = option.dataset.rating;
-        console.log('Selected rating:', selectedRating); // Debug line
     });
 });
 
@@ -20,6 +23,11 @@ ratingOptions.forEach(option => {
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     console.log('Form submitted'); // Debug line
+    console.log('Selected rating:', selectedRating);
+    console.log('File selected:', fileInput.files[0]?.name || 'No file');
+    console.log('Food name:', document.getElementById('foodName').value);
+    console.log('Location:', document.getElementById('location').value);
+    console.log('Comment:', document.getElementById('comment').value);
 
     if (!selectedRating) {
         alert('Please select a rating');
@@ -33,7 +41,7 @@ form.addEventListener('submit', async (e) => {
     }
 
     try {
-        console.log('Uploading to Imgur...'); // Debug line
+        console.log('Starting Imgur upload...'); // Debug line
         const formData = new FormData();
         formData.append('image', file);
 
@@ -45,10 +53,14 @@ form.addEventListener('submit', async (e) => {
             body: formData
         });
 
+        console.log('Imgur response status:', response.status); // Debug line
         const data = await response.json();
-        console.log('Imgur response:', data); // Debug line
+        console.log('Imgur response data:', data); // Debug line
 
-        if (!data.success) throw new Error('Upload failed');
+        if (!data.success) {
+            console.error('Imgur upload failed:', data);
+            throw new Error('Upload failed: ' + JSON.stringify(data));
+        }
 
         // Create the entry
         const entry = {
@@ -63,25 +75,29 @@ form.addEventListener('submit', async (e) => {
         console.log('Creating entry:', entry); // Debug line
 
         // Save to localStorage
-        let entries = JSON.parse(localStorage.getItem('foodRatings') || '[]');
-        entries.unshift(entry);
-        localStorage.setItem('foodRatings', JSON.stringify(entries));
+        let entries = [];
+        try {
+            const existingEntries = localStorage.getItem('foodRatings');
+            console.log('Existing entries:', existingEntries);
+            entries = existingEntries ? JSON.parse(existingEntries) : [];
+        } catch (e) {
+            console.error('Error parsing existing entries:', e);
+        }
 
-        console.log('Saved to localStorage'); // Debug line
+        entries.unshift(entry);
+        console.log('New entries array:', entries);
+
+        try {
+            localStorage.setItem('foodRatings', JSON.stringify(entries));
+            console.log('Successfully saved to localStorage');
+        } catch (e) {
+            console.error('Error saving to localStorage:', e);
+        }
 
         alert('Rating submitted successfully!');
         window.location.href = 'index.html';
     } catch (error) {
-        console.error('Error details:', error); // More detailed error logging
+        console.error('Detailed error:', error);
         alert('Error uploading rating. Please check the console for details.');
     }
 });
-
-// Test localStorage access
-try {
-    localStorage.setItem('test', 'test');
-    localStorage.removeItem('test');
-    console.log('localStorage is working');
-} catch (e) {
-    console.error('localStorage is not available:', e);
-}
