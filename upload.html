@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Food Rating</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Gallery</a>
+        <a href="upload.html" class="active">Upload</a>
+    </nav>
+
+    <div class="upload-container">
+        <h2>Upload Food Rating</h2>
+        
+        <form id="uploadForm">
+            <div class="input-group">
+                <label for="foodName">Food Name:</label>
+                <input type="text" id="foodName" required>
+            </div>
+
+            <div class="input-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" required>
+            </div>
+
+            <div class="input-group">
+                <label for="fileInput">Food Image:</label>
+                <input type="file" id="fileInput" accept="image/*" required>
+                <img id="imagePreview">
+            </div>
+
+            <div class="ratings">
+                <h3>Rating:</h3>
+                <div class="rating-images">
+                    <img src="images/5.jpeg" id="up" data-rating="5" class="rating-option">
+                    <img src="images/2.5.jpeg" id="middle" data-rating="2.5" class="rating-option">
+                    <img src="images/0.jpg" id="down" data-rating="0" class="rating-option">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="comment">Comment:</label>
+                <textarea id="comment" required></textarea>
+            </div>
+
+            <button type="submit">Submit Rating</button>
+        </form>
+    </div>
+
+    <script type="module" src="js/upload.js"></script>
+</body>
+</html>
