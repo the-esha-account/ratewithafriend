@@ -3,11 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Food Rating</title>
+    <title>Upload - Fanta Rate</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             text-align: center;
             font-family: Arial, sans-serif;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            padding: 5px 15px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: #FF4E50;
+        }
+
+        nav a.active {
+            border-bottom: 2px solid #FF4E50;
         }
 
         #imagePreview {
@@ -27,116 +72,3 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .rating-option {
-            width: 40px;
-            border: 2px solid transparent;
-            border-radius: 50%;
-            padding: 2px;
-            transition: 0.2s;
-        }
-
-        .rating-option-container:hover .rating-option {
-            border-color: #666;
-        }
-
-        .rating-option.selected {
-            border-color: #333;
-        }
-
-        .rating-label {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .input-group {
-            margin: 15px 0;
-        }
-
-        input[type="text"], textarea {
-            width: 300px;
-            padding: 8px;
-            margin-top: 5px;
-        }
-
-        textarea {
-            height: 100px;
-            resize: vertical;
-        }
-
-        button {
-            background: #333;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            background: #444;
-        }
-    </style>
-</head>
-<body>
-    <nav>
-        <a href="index.html">Gallery</a>
-        <a href="upload.html" style="border-bottom: 2px solid #333;">Upload</a>
-    </nav>
-
-    <h2>Upload Food Rating</h2>
-    
-    <form id="uploadForm">
-        <div class="input-group">
-            <label for="foodName">Food Name:</label>
-            <input type="text" id="foodName" required>
-        </div>
-
-        <div class="input-group">
-            <label for="location">Location:</label>
-            <input type="text" id="location" required>
-        </div>
-
-        <div class="input-group">
-            <label for="fileInput">Food Image:</label>
-            <input type="file" id="fileInput" accept="image/*" required>
-            <img id="imagePreview">
-        </div>
-
-        <div class="ratings">
-            <div class="rating-options">
-                <div class="rating-option-container">
-                    <img src="5.jpeg" data-rating="5" class="rating-option">
-                    <span class="rating-label">5</span>
-                </div>
-                <div class="rating-option-container">
-                    <img src="2.5.jpeg" data-rating="2.5" class="rating-option">
-                    <span class="rating-label">2.5</span>
-                </div>
-                <div class="rating-option-container">
-                    <img src="0.jpg" data-rating="0" class="rating-option">
-                    <span class="rating-label">0</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label for="comment">Comment:</label>
-            <textarea id="comment" required></textarea>
-        </div>
-
-        <button type="submit">Submit Rating</button>
-    </form>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        window.supabase = supabase
-    </script>
-    <script src="js/upload.js" type="module"></script>
-</body>
-</html>
