@@ -3,34 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Rating Gallery</title>
+    <title>Gallery - Fanta Rate</title>
     <style>
         body {
             text-align: center;
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            width: 100%;
             padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
         }
 
         nav {
-            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
         }
 
         nav a {
-            margin: 0 15px;
             text-decoration: none;
             color: #333;
             font-size: 18px;
             padding: 5px 15px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: #FF4E50;
+        }
+
+        nav a.active {
+            border-bottom: 2px solid #FF4E50;
+        }
+
+        .gallery-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 20px;
         }
 
         .gallery-item {
@@ -64,31 +100,3 @@
             color: #666;
             font-size: 0.9em;
             margin-bottom: 10px;
-        }
-
-        .gallery-comment {
-            font-size: 0.9em;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
-    <nav>
-        <a href="index.html" style="border-bottom: 2px solid #333;">Gallery</a>
-        <a href="upload.html">Upload</a>
-    </nav>
-
-    <div class="gallery-container">
-        <h2>Food Rating Gallery</h2>
-        <div id="gallery" class="gallery-grid">
-            <!-- Entries will be added here dynamically -->
-        </div>
-    </div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-    window.supabase = supabase
-</script>
-<script src="js/gallery.js" type="module"></script>
-</body>
-</html>
