@@ -1,4 +1,4 @@
-const IMGUR_CLIENT_ID = 'YOUR_IMGUR_CLIENT_ID'; // First, make sure you added your Imgur Client ID here!
+const IMGUR_CLIENT_ID = '8db0a94a56a0071'; // First, make sure you added your Imgur Client ID here!
 
 const form = document.getElementById('uploadForm');
 const fileInput = document.getElementById('fileInput');
