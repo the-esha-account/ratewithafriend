@@ -15,21 +15,21 @@ console.log('upload.js loaded');
 fileInput.addEventListener('change', function (event) {
     const file = event.target.files[0];
     if (!file) return;
-    
+
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (!allowedTypes.includes(file.type)) {
         alert('Only JPG, PNG, and GIF images are allowed.');
         fileInput.value = '';
         return;
     }
-    
-    const MAX_SIZE = 5 * 4000 * 4000; // 5MB
-    if (file.size > MAX_SIZE) {
-        alert('Image must be smaller than 5MB.');
-        fileInput.value = '';
+
+    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        alert('File size must be 5MB or less.');
+        fileInput.value = ''; // Clear the file input
+        imagePreview.style.display = 'none';
         return;
     }
-    
+
     const reader = new FileReader();
     reader.onload = function (e) {
         imagePreview.src = e.target.result;
